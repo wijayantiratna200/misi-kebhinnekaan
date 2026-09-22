@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPI IPS IX — Masyarakat Majemuk & Integrasi Bangsa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+:root{--purple:#7B2CBF;--purple2:#5A189A;--teal:#2EC4B6;--white:#fff;--bg:#f7f4fb;--text:#25213a;--muted:#706b80;--card:#fff;--shadow:0 12px 35px rgba(74,35,110,.12);--danger:#ef476f;--gold:#ffb703}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Poppins,Arial,sans-serif;background:var(--bg);color:var(--text);transition:.3s}
+body.dark{--bg:#17131e;--text:#f7f2ff;--muted:#c4bcd0;--card:#241d2d;--shadow:0 12px 35px rgba(0,0,0,.28)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{min-height:100vh}
+header{position:sticky;top:0;z-index:20;background:rgba(123,44,191,.96);color:#fff;backdrop-filter:blur(12px);box-shadow:0 5px 20px #0002}
+.nav{max-width:1200px;margin:auto;display:flex;align-items:center;gap:12px;padding:12px 18px}.brand{font-weight:800;font-size:16px;flex:1}.userpill{font-size:12px;background:#fff2;padding:7px 10px;border-radius:20px}.iconbtn{background:#fff1;color:#fff;border:1px solid #fff3;border-radius:10px;padding:9px 11px}
+main{max-width:1200px;margin:auto;padding:25px 18px 60px}.screen{display:none;animation:fade .35s ease}.screen.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{background:linear-gradient(135deg,var(--purple),#9d4edd);border-radius:28px;padding:42px 28px;color:#fff;display:grid;grid-template-columns:1.35fr .65fr;gap:25px;box-shadow:var(--shadow);overflow:hidden}
+.hero h1{font-size:clamp(28px,5vw,50px);line-height:1.08;margin:10px 0}.eyebrow{font-weight:700;letter-spacing:1px}.hero p{opacity:.9}.heroart{display:grid;place-items:center;font-size:100px;filter:drop-shadow(0 15px 12px #0002)}
+.formbox,.card{background:var(--card);border-radius:22px;padding:24px;box-shadow:var(--shadow);border:1px solid #7b2cbf15}.formbox{margin-top:20px}
+label{font-weight:600;font-size:14px;display:block;margin:10px 0 6px}input,select,textarea{width:100%;padding:12px 14px;border:2px solid #7b2cbf22;border-radius:12px;background:transparent;color:var(--text);outline:none}input:focus,select:focus,textarea:focus{border-color:var(--teal)}textarea{min-height:90px;resize:vertical}
+.btn{padding:12px 17px;border-radius:12px;font-weight:700;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{transform:translateY(-2px)}.primary{background:var(--purple);color:#fff}.teal{background:var(--teal);color:#103d39}.light{background:#7b2cbf12;color:var(--purple)}.danger{background:#ef476f;color:#fff}.gold{background:var(--gold);color:#3d2b00}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}.title{font-size:30px;margin:10px 0 6px}.subtitle{color:var(--muted);margin-top:0}
+.progresswrap{background:#7b2cbf18;height:10px;border-radius:99px;overflow:hidden;margin:12px 0}.progress{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--teal));transition:.4s}
+.menugrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}.menucard{min-height:145px;background:var(--card);padding:20px;border-radius:22px;box-shadow:var(--shadow);transition:.25s;position:relative;overflow:hidden;text-align:left}.menucard:hover{transform:translateY(-5px) rotate(.3deg)}.menucard .ico{font-size:42px}.menucard h3{margin:8px 0 3px}.menucard p{margin:0;color:var(--muted);font-size:12px}.badge{position:absolute;right:13px;top:13px;background:var(--teal);font-size:10px;padding:4px 8px;border-radius:20px;font-weight:700}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.callout{border-left:6px solid var(--teal);background:#2ec4b612;padding:16px;border-radius:14px;margin:14px 0}.callout strong{color:var(--purple)}
+.promptbox{background:linear-gradient(135deg,#fff,#f1e6fa);padding:22px;border-radius:20px;border:2px dashed var(--purple);font-size:19px;font-weight:700}.dark .promptbox{background:#30263a}
+.option{display:block;width:100%;text-align:left;padding:13px 15px;margin:9px 0;background:#7b2cbf09;border:2px solid #7b2cbf14;border-radius:12px;color:var(--text);transition:.2s}.option:hover{border-color:var(--teal)}.option.selected{border-color:var(--purple);background:#7b2cbf15}.option.correct{border-color:#22a06b;background:#22a06b18}.option.wrong{border-color:var(--danger);background:#ef476f15}
+.feedback{margin-top:10px;padding:12px;border-radius:12px;display:none}.feedback.show{display:block}.ok{background:#22a06b18}.no{background:#ef476f18}
+.qbox{margin-bottom:18px}.qhead{display:flex;gap:10px;align-items:flex-start}.num{background:var(--purple);color:#fff;border-radius:10px;padding:5px 9px;font-weight:800;font-size:12px}.qtext{font-weight:600}
+.score{font-size:38px;font-weight:800;color:var(--purple)}.center{text-align:center}.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden}th,td{padding:11px;border-bottom:1px solid #7b2cbf15;text-align:left;font-size:13px}th{background:var(--purple);color:#fff}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.timecard{padding:16px;border-radius:16px;background:#7b2cbf0c;border-top:5px solid var(--teal)}.timecard b{color:var(--purple)}
+.case{background:linear-gradient(135deg,#2ec4b614,#7b2cbf0b);padding:20px;border-radius:18px}
+.dragarea{display:grid;grid-template-columns:1fr 1fr;gap:18px}.draggable{padding:12px;background:var(--purple);color:#fff;border-radius:10px;margin:8px 0;cursor:grab}.dropzone{min-height:54px;padding:10px;border:2px dashed var(--teal);border-radius:10px;margin:8px 0;background:#2ec4b608}.dropzone.over{background:#2ec4b620}
+.certificate{background:#fff;color:#222;max-width:850px;margin:20px auto;padding:48px;border:12px double var(--purple);border-radius:10px;text-align:center;box-shadow:var(--shadow)}.certificate .certname{font-size:38px;color:var(--purple);font-weight:800}.certificate .certtitle{font-size:26px;font-weight:700}.certseal{font-size:52px}
+footer{text-align:center;color:var(--muted);padding:25px;font-size:12px}
+.stepbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.step{font-size:11px;font-weight:700;padding:7px 10px;border-radius:999px;background:#7b2cbf12;color:var(--muted)}
+.step.active{background:var(--purple);color:#fff}.step.done{background:#2ec4b6;color:#063d38}
+.nextbar{margin-top:22px;padding:16px;background:linear-gradient(135deg,#7b2cbf0d,#2ec4b60d);border:1px solid #7b2cbf18;border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nextinfo{font-size:12px;color:var(--muted)}.nextbtn{min-width:190px}.nextbtn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.locked{position:relative;opacity:.55;cursor:not-allowed!important}.locked:after{content:'🔒';position:absolute;right:12px;top:12px;font-size:18px}
+.toast{position:fixed;right:18px;bottom:18px;background:#20182a;color:#fff;padding:13px 17px;border-radius:12px;box-shadow:var(--shadow);z-index:99;transform:translateY(120px);transition:.3s}.toast.show{transform:none}
+@media(max-width:900px){.menugrid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.heroart{font-size:70px}.twocol,.timeline{grid-template-columns:1fr}.three{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){main{padding:15px 12px 45px}.menugrid{grid-template-columns:1fr 1fr;gap:10px}.menucard{min-height:130px;padding:15px}.menucard .ico{font-size:34px}.hero{padding:28px 20px}.certificate{padding:25px;border-width:7px}.certificate .certname{font-size:27px}}
+@media print{header,.toolbar,footer,.no-print{display:none!important}.screen{display:none!important}.screen.active{display:block!important}.certificate{box-shadow:none;margin:0;max-width:none;height:100vh;display:flex;flex-direction:column;justify-content:center}}
+
+.leveltag{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:10px;background:#efe5ff;color:#5A189A}
+.contextbox{border-left:5px solid var(--teal);background:rgba(46,196,182,.10);padding:14px 16px;border-radius:12px;margin-top:12px}
+.keybox{border-left:5px solid var(--purple);background:rgba(123,44,191,.08);padding:14px 16px;border-radius:12px;margin-top:12px}
+
+
+/* ===== VISUAL UPGRADE ===== */
+.visual-frame{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(135deg,#f4effb,#e9fbf8);border:1px solid #7b2cbf18;box-shadow:var(--shadow);margin:18px 0}.visual-frame img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}.visual-frame.compact img{aspect-ratio:4/3}.visual-caption{padding:10px 14px;font-size:12px;color:var(--muted);background:var(--card)}.visual-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.visual-strip .visual-frame{margin:0}.visual-strip .visual-frame img{aspect-ratio:4/3}.menuvisual{width:100%;height:78px;object-fit:cover;border-radius:15px;margin-bottom:10px}.heroart img{width:100%;max-width:360px;aspect-ratio:16/10;object-fit:cover;border-radius:22px}.section-visual{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:stretch;margin:18px 0}.section-visual .visual-frame{margin:0}.section-visual .card{display:flex;flex-direction:column;justify-content:center}@media(max-width:850px){.visual-strip{grid-template-columns:1fr 1fr}.section-visual{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.heroart img{max-width:100%}}@media(max-width:560px){.visual-strip{grid-template-columns:1fr}.visual-frame img{aspect-ratio:16/10}}
+
+/* ===== PREMIUM PRODUCT UPGRADE ===== */
+.premium-ribbon{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);font-size:11px;font-weight:800;letter-spacing:.5px}
+.hero{position:relative;background:radial-gradient(circle at 85% 15%,rgba(46,196,182,.34),transparent 28%),radial-gradient(circle at 15% 90%,rgba(255,255,255,.14),transparent 30%),linear-gradient(135deg,#5A189A 0%,#7B2CBF 55%,#9D4EDD 100%);min-height:390px}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none}.hero:before{width:240px;height:240px;right:-80px;top:-100px;border:1px solid rgba(255,255,255,.18);box-shadow:0 0 0 35px rgba(255,255,255,.04),0 0 0 70px rgba(255,255,255,.025)}.hero:after{width:170px;height:170px;left:-80px;bottom:-110px;background:rgba(46,196,182,.10)}
+.hero>*{position:relative;z-index:1}.hero-copy{display:flex;flex-direction:column;justify-content:center}.hero h1{max-width:720px;text-shadow:0 5px 25px rgba(0,0,0,.16)}
+.hero-sub{font-size:15px;line-height:1.8;max-width:650px}.hero-meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.hero-chip{padding:8px 11px;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:11px;font-weight:700}
+.heroart .visual-frame{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);box-shadow:0 20px 50px rgba(0,0,0,.2)}.heroart .visual-caption{background:rgba(255,255,255,.08);color:#fff}
+.start-panel{position:relative;display:grid;grid-template-columns:.85fr 1.15fr;gap:22px;align-items:center}.start-art{border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#efe5ff,#dcfaf6);padding:8px}.start-art img{width:100%;display:block;border-radius:18px;aspect-ratio:4/3;object-fit:cover}.formbox{border:1px solid rgba(123,44,191,.12)}
+.fieldhint{font-size:11px;color:var(--muted);margin-top:5px}.start-promise{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.promise{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:11px;background:#7b2cbf09;font-size:11px;font-weight:700}
+.dashboard{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.welcome-card{background:linear-gradient(135deg,#fff,#f4effb);border:1px solid #7b2cbf14}.dark .welcome-card{background:linear-gradient(135deg,#241d2d,#30263a)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.stat{padding:13px;border-radius:16px;background:rgba(123,44,191,.07);border:1px solid rgba(123,44,191,.08)}.stat b{display:block;font-size:21px;color:var(--purple)}.stat span{font-size:10px;color:var(--muted)}
+.xpbar{height:12px;background:#7b2cbf16;border-radius:99px;overflow:hidden;margin:8px 0}.xpfill{height:100%;width:0;background:linear-gradient(90deg,#7B2CBF,#2EC4B6);transition:.5s}.levelbox{display:flex;align-items:center;gap:12px}.levelbadge{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#7B2CBF,#2EC4B6);color:#fff;font-size:24px;box-shadow:0 10px 25px rgba(123,44,191,.22)}
+.mission-label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 8px}.mission-label h2{margin:0}.mission-label span{font-size:11px;color:var(--muted)}
+.menucard{min-height:185px;border:1px solid rgba(123,44,191,.10);background:linear-gradient(180deg,var(--card),rgba(123,44,191,.025));}.menucard:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--teal));transform:scaleX(0);transform-origin:left;transition:.25s}.menucard:hover:before{transform:scaleX(1)}.menucard .ico{position:absolute;right:15px;bottom:13px;opacity:.18;font-size:52px}.menucard h3{font-size:15px;position:relative}.menucard p{max-width:90%;position:relative}.menuvisual{height:88px;box-shadow:0 7px 18px rgba(74,35,110,.08)}
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.badge-item{padding:13px 10px;border-radius:16px;background:#7b2cbf08;border:1px solid #7b2cbf12;text-align:center;opacity:.45;filter:grayscale(1)}.badge-item.unlocked{opacity:1;filter:none;background:linear-gradient(135deg,#fff,#effbf9);border-color:#2ec4b644}.dark .badge-item.unlocked{background:#30263a}.badge-icon{font-size:27px;display:block;margin-bottom:5px}.badge-item b{font-size:11px}.badge-item small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.quickbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.quickbar .btn{font-size:11px;padding:9px 11px}.mobile-nav{display:none}
+@media(max-width:850px){.start-panel,.dashboard{grid-template-columns:1fr}.badge-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.hero{min-height:auto}.hero h1{font-size:29px}.hero-sub{font-size:13px}.hero-meta{gap:6px}.hero-chip{font-size:9px;padding:7px 8px}.stats{grid-template-columns:repeat(3,1fr)}.badge-grid{grid-template-columns:repeat(2,1fr)}.mobile-nav{position:fixed;display:flex;left:10px;right:10px;bottom:10px;z-index:50;background:rgba(32,24,42,.94);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:7px;justify-content:space-around;box-shadow:0 12px 35px rgba(0,0,0,.25)}.mobile-nav button{background:transparent;color:#fff;font-size:10px;padding:7px 10px;border-radius:11px}.mobile-nav button:active{background:rgba(255,255,255,.12)}main{padding-bottom:95px}.start-promise{gap:6px}.promise{font-size:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="nav"><div class="brand">📚 MPI IPS IX • MISI BHINNEKA</div><div id="userPill" class="userpill">Belum dimulai</div><button class="iconbtn" onclick="toggleDark()">◐</button><button class="iconbtn" onclick="toggleMusic()" id="musicBtn">🔇</button><button class="iconbtn" onclick="go('home')">⌂</button></div></header>
+<main>
+
+<section id="start" class="screen active">
+  <div class="hero">
+    <div class="hero-copy">
+      <span class="premium-ribbon">✨ PREMIUM INTERACTIVE LEARNING • IPS KELAS IX</span>
+      <div class="eyebrow" style="margin-top:18px">MISI BHINNEKA</div>
+      <h1>Masyarakat Majemuk untuk Mewujudkan Integrasi Bangsa</h1>
+      <p class="hero-sub">Jelajahi keberagaman Indonesia melalui misi, aktivitas, kuis HOTS, refleksi, dan pencapaian belajar. Setiap langkah membawamu semakin dekat pada <b>Integrasi Bangsa</b>.</p>
+      <div class="hero-meta"><span class="hero-chip">🎯 HOTS C3–C4</span><span class="hero-chip">🏅 Badge & Progress</span><span class="hero-chip">🧩 Aktivitas Interaktif</span><span class="hero-chip">📱 Mobile Friendly</span></div>
+    </div>
+    <div class="heroart"><div class="visual-frame"><img src="assets/cover.png" alt="Ilustrasi keberagaman dan persatuan Indonesia" loading="eager"><div class="visual-caption">Misi belajar dimulai dari keberagaman menuju persatuan.</div></div></div>
+  </div>
+  <div class="formbox start-panel">
+    <div class="start-art"><img src="assets/identitas.png" alt="Siswa memulai perjalanan belajar"></div>
+    <div>
+      <span class="leveltag">🚀 START YOUR MISSION</span>
+      <h2 style="margin-top:4px">Siap memulai perjalanan?</h2>
+      <p class="subtitle">Masukkan identitasmu. Progress, badge, dan hasil belajarmu akan tersimpan di perangkat ini.</p>
+      <label>Nama Peserta Didik</label><input id="nama" placeholder="Tulis nama lengkap..." autocomplete="name">
+      <div class="fieldhint">Gunakan nama yang akan tercantum pada sertifikat.</div>
+      <label>Kelas</label>
+      <select id="kelas" onchange="manualClass()">
+        <option value="">Pilih kelas</option><option>IX 1</option><option>IX 2</option><option>IX 3</option><option>IX 4</option><option>IX 5</option><option>IX 6</option><option>IX 7</option><option>IX 8</option><option>IX 9</option><option>IX 10</option><option value="manual">LAINNYA/TULIS KELAS MANUAL</option>
+      </select>
+      <input id="kelasManual" class="hidden" placeholder="Tulis kelas...">
+      <div class="start-promise"><span class="promise">🔒 Progress tersimpan lokal</span><span class="promise">🏆 Badge pencapaian</span><span class="promise">📜 Sertifikat</span></div>
+      <button class="btn primary" style="width:100%;margin-top:18px;padding:15px" onclick="startApp()">🚀 MULAI MISI BHINNEKA</button>
+    </div>
+  </div>
+</section>
+
+<section id="home" class="screen">
+  <div class="dashboard">
+    <div class="card welcome-card">
+      <div class="eyebrow" style="color:var(--purple)">MISSION CONTROL</div>
+      <h1 class="title">Halo, <span id="homeName">Peserta Didik</span>! 👋</h1>
+      <p class="subtitle">Kelas <b id="homeClass">-</b> • Mari tumbuh melalui keberagaman.</p>
+      <div class="levelbox"><div class="levelbadge">★</div><div style="flex:1"><b id="levelTitle">Level 1 • Penjelajah Kebhinekaan</b><div class="xpbar"><div id="xpFill" class="xpfill"></div></div><small id="xpText">0 XP • 0% perjalanan</small></div></div>
+      <div class="stats"><div class="stat"><b id="statDone">0/7</b><span>Misi selesai</span></div><div class="stat"><b id="statScore">-</b><span>Skor akhir</span></div><div class="stat"><b id="statBadge">0</b><span>Badge</span></div></div>
+    </div>
+    <div class="card">
+      <div class="visual-frame" style="margin:0"><img src="assets/home.png" alt="Peta perjalanan belajar" loading="eager"><div class="visual-caption">Peta perjalanan Misi Bhinneka</div></div>
+      <div class="quickbar"><button class="btn light" onclick="go('materi')">📖 Lanjut Belajar</button><button class="btn teal" onclick="go('kuis')">🧠 Tantang Dirimu</button></div>
+    </div>
+  </div>
+  <div class="mission-label"><h2>🗺️ Peta Misi</h2><span>Ikuti perjalanan secara bertahap</span></div>
+  <div class="progresswrap"><div id="globalProgress" class="progress"></div></div><small id="progressText">Progress belajar: 0%</small>
+  <div class="menugrid">
+    <button class="menucard" onclick="go('apersepsi')"><img class="menuvisual" src="assets/apersepsi.png" alt="Visual apersepsi" loading="lazy"><span class="ico">💡</span><h3>01 • Apersepsi</h3><p>Amati, pikirkan, dan berpendapat.</p></button>
+    <button class="menucard" onclick="go('awal')"><img class="menuvisual" src="assets/identitas.png" alt="Visual asesmen awal" loading="lazy"><span class="ico">🧩</span><h3>02 • Asesmen Awal</h3><p>Kenali pengetahuan awalmu.</p></button>
+    <button class="menucard" onclick="go('materi')"><img class="menuvisual" src="assets/masyarakat-majemuk.png" alt="Visual materi" loading="lazy"><span class="ico">📖</span><h3>03 • Materi</h3><p>Pelajari konsep secara visual.</p></button>
+    <button class="menucard" onclick="go('aktivitas')"><img class="menuvisual" src="assets/aktivitas.png" alt="Visual aktivitas" loading="lazy"><span class="ico">🎯</span><h3>04 • Aktivitas</h3><p>Coba mencocokkan konsep.</p></button>
+    <button class="menucard" onclick="go('kuis')"><img class="menuvisual" src="assets/kuis-c4.png" alt="Visual kuis HOTS" loading="lazy"><span class="ico">🧠</span><h3>05 • Kuis HOTS</h3><p>10 soal C3–C4 + pembahasan.</p></button>
+    <button class="menucard" onclick="go('akhir')"><img class="menuvisual" src="assets/asesmen.png" alt="Visual asesmen akhir" loading="lazy"><span class="ico">🏆</span><h3>06 • Asesmen Akhir</h3><p>Ukur pencapaian belajarmu.</p></button>
+    <button class="menucard" onclick="go('refleksi')"><img class="menuvisual" src="assets/refleksi.png" alt="Visual refleksi" loading="lazy"><span class="ico">💭</span><h3>07 • Refleksi</h3><p>Kenali proses belajarmu.</p></button>
+    <button class="menucard" onclick="go('sertifikat')"><img class="menuvisual" src="assets/sertifikat.png" alt="Visual sertifikat" loading="lazy"><span class="ico">🎓</span><h3>🏅 Sertifikat</h3><p>Rayakan pencapaianmu.</p></button>
+  </div>
+  <div class="card" style="margin-top:18px"><div class="mission-label" style="margin:0"><h3>🏅 Koleksi Badge</h3><span>Unlock saat misi selesai</span></div><div id="badges" class="badge-grid"></div></div>
+</section>
+<div class="mobile-nav"><button onclick="go('home')">⌂<br>Home</button><button onclick="go('materi')">📖<br>Materi</button><button onclick="go('aktivitas')">🎯<br>Aktivitas</button><button onclick="go('kuis')">🧠<br>Kuis</button><button onclick="go('sertifikat')">🎓<br>Hasil</button></div>
+
+<section id="apersepsi" class="screen"><div class="stepbar"><span class="step active">Langkah 1 dari 8 • Apersepsi</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button></div>
+<h1 class="title">💡 Apersepsi</h1><p class="subtitle">Jangan buru-buru mencari jawaban. Amati dulu, hubungkan dengan pengalamanmu.</p>
+<div class="twocol">
+<div class="card center"><div class="visual-frame "><img src="assets/apersepsi.png" alt="Indonesia dalam keberagaman" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><h3>Indonesia dalam Keberagaman</h3><p>Bayangkan sekolahmu terdiri dari teman dengan suku, bahasa, agama, tradisi, dan kebiasaan yang beragam.</p><div class="callout"><b>Tantangan:</b> Bagaimana perbedaan dapat menjadi kekuatan?</div></div>
+<div class="card">
+<h3>🎬 Video Pemantik</h3><div style="aspect-ratio:16/9;background:#17131e;border-radius:15px;overflow:hidden"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/6QfGKMgKhqc?start=32" title="Video pemantik" frameborder="0" allowfullscreen></iframe></div>
+<h3 style="margin-top:20px">💭 Pertanyaan Pemantik</h3>
+<div class="promptbox">“Apa yang akan terjadi jika masyarakat Indonesia tidak mau menghargai perbedaan?”</div>
+<label>Pendapatmu:</label><textarea id="apersepsiAnswer" placeholder="Tuliskan pemikiran awalmu..."></textarea>
+<button class="btn teal" onclick="finishApersepsi()">💾 Simpan & Selesai</button>
+</div></div>
+<div class="nextbar"><div class="nextinfo">Setelah pendapat tersimpan, tombol berikutnya akan aktif.</div><button id="nextApersepsi" class="btn primary nextbtn" disabled onclick="go('awal')">Selanjutnya → Asesmen Awal</button></div>
+</section>
+
+<section id="awal" class="screen"><div class="stepbar"><span class="step active">Langkah 2 dari 8 • Asesmen Awal</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button><button class="btn light" onclick="resetQuiz('awal')">↻ Ulangi</button></div>
+<h1 class="title">🧩 Asesmen Awal</h1><p class="subtitle">5 soal untuk memetakan pengetahuan awal. Tidak perlu takut salah.</p><div id="awalQuiz"></div><div class="card center"><button class="btn primary" onclick="submitQuiz('awal')">Periksa Jawaban</button><div id="awalResult" style="margin-top:15px"></div></div>
+<div class="nextbar"><div class="nextinfo">Selesaikan semua 5 soal untuk melanjutkan.</div><button id="nextAwal" class="btn primary nextbtn" disabled onclick="go('materi')">Selanjutnya → Materi</button></div>
+</section>
+
+<section id="materi" class="screen">
+<div class="stepbar"><span class="step active">Langkah 3 dari 8 • Materi</span><span class="step">Pelajari konsep → hubungkan dengan lingkungan → simpulkan.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button></div>
+<h1 class="title">📖 Materi Pembelajaran Lengkap</h1>
+<p class="subtitle">Masyarakat Majemuk untuk Mewujudkan Integrasi Bangsa dengan Prinsip Kebhinekaan</p>
+<div class="visual-strip">
+<div class="visual-frame compact"><img src="assets/suku.png" alt="Keberagaman suku" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="visual-frame compact"><img src="assets/agama.png" alt="Kerukunan antaragama" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="visual-frame compact"><img src="assets/bahasa.png" alt="Keberagaman bahasa" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div></div>
+
+<div class="card">
+<div class="visual-frame "><img src="assets/bhinneka.png" alt="Bhinneka Tunggal Ika" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h2>🎯 Tujuan Belajar</h2>
+<p>Setelah mempelajari materi ini, kamu diharapkan mampu <b>menjelaskan</b> pengertian dan ciri masyarakat majemuk, <b>mengidentifikasi</b> bentuk keberagaman di lingkungan sekitar, <b>menganalisis</b> hubungan keberagaman dengan integrasi nasional, serta <b>menerapkan</b> prinsip Bhinneka Tunggal Ika dalam kehidupan sehari-hari.</p>
+<div class="keybox"><b>Kata kunci:</b> masyarakat majemuk • keberagaman • toleransi • integrasi nasional • Bhinneka Tunggal Ika • kerja sama • perdagangan antardaerah.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<h2>1. 🌏 Apa Itu Masyarakat Majemuk?</h2>
+<p>Masyarakat majemuk adalah masyarakat yang terdiri atas berbagai kelompok dengan latar belakang <b>suku, budaya, agama, dan ras</b> yang berbeda. Keberagaman tersebut merupakan kekayaan dalam kehidupan bersama apabila setiap kelompok mampu saling menghargai, bekerja sama, dan menjunjung persatuan.</p>
+<div class="contextbox"><b>Contoh kontekstual di sekolah:</b> dalam satu kelas dapat ditemukan siswa dengan kebiasaan keluarga, bahasa daerah, tradisi, atau cara merayakan hari tertentu yang berbeda. Perbedaan itu tidak menghalangi kerja kelompok jika semua siswa memiliki tujuan bersama.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<h2>2. 🧩 Bentuk Keberagaman yang Dapat Diamati</h2>
+<div class="three">
+<div class="timecard"><b>👥 Suku bangsa</b><p>Perbedaan asal kelompok masyarakat dan latar budaya.</p></div>
+<div class="timecard"><b>🗣️ Bahasa/dialek</b><p>Perbedaan bahasa daerah atau dialek yang digunakan.</p></div>
+<div class="timecard"><b>🕌 Agama/kepercayaan</b><p>Perbedaan agama atau kepercayaan yang hidup berdampingan.</p></div>
+<div class="timecard"><b>🎭 Tradisi & adat</b><p>Upacara, kebiasaan, nilai, dan adat istiadat yang beragam.</p></div>
+<div class="timecard"><b>🎨 Kesenian</b><p>Tari, musik, pakaian, dan karya budaya yang berbeda.</p></div>
+<div class="timecard"><b>💼 Mata pencaharian</b><p>Perbedaan pekerjaan dan aktivitas ekonomi masyarakat.</p></div>
+</div>
+<div class="contextbox"><b>Ayo amati:</b> pilih satu bentuk keberagaman yang kamu temukan di sekolah atau lingkungan tempat tinggal. Apa manfaatnya bagi kehidupan bersama?</div>
+<div class="visual-strip">
+<div class="visual-frame compact"><img src="assets/budaya.png" alt="Keberagaman budaya" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="visual-frame compact"><img src="assets/pekerjaan.png" alt="Keberagaman pekerjaan" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="visual-frame compact"><img src="assets/geografis.png" alt="Keberagaman geografis Indonesia" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div></div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="section-visual"><div class="visual-frame "><img src="assets/ciri-masyarakat-majemuk.png" alt="Ciri masyarakat majemuk" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="card"><h3>Amati Visual</h3><p>Perhatikan bagaimana berbagai kelompok tetap memiliki identitas, tetapi hidup dan berinteraksi dalam satu masyarakat.</p></div></div>
+<h2>3. 🔎 Lima Ciri Masyarakat Majemuk</h2>
+<div class="three">
+<div class="timecard"><b>01 • Kelompok dengan kebudayaan berbeda</b><p>Masyarakat terbagi dalam kelompok sosial dengan subkebudayaan yang berbeda, misalnya adat, bahasa, agama, dan cara berpakaian.</p></div>
+<div class="timecard"><b>02 • Lembaga sosial berdiri sendiri</b><p>Terdapat keluarga, pendidikan, agama, dan ekonomi yang menjalankan fungsi masing-masing sesuai kebutuhan kelompok.</p></div>
+<div class="timecard"><b>03 • Kesepakatan nilai dasar dapat terbatas</b><p>Perbedaan cara pandang antarkelompok dapat membuat konsensus terhadap nilai atau kepentingan tertentu menjadi lebih sulit.</p></div>
+<div class="timecard"><b>04 • Potensi konflik sekaligus integrasi</b><p>Perbedaan kepentingan dapat memunculkan konflik, tetapi persamaan tujuan dan kerja sama dapat menciptakan integrasi.</p></div>
+<div class="timecard"><b>05 • Dominasi kelompok tertentu dalam politik</b><p>Dalam masyarakat majemuk dapat muncul kelompok yang memiliki pengaruh politik lebih besar dibanding kelompok lain.</p></div>
+</div>
+<div class="keybox"><b>Ingat!</b> Kemajemukan tidak otomatis berarti konflik. Konflik dapat dicegah atau dikelola melalui dialog, kesepakatan, toleransi, dan tujuan bersama.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="section-visual"><div class="visual-frame "><img src="assets/potensi-keberagaman.png" alt="Potensi keberagaman" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="card"><h3>Keberagaman sebagai Kekuatan</h3><p>Perbedaan dapat menjadi sumber ide, kerja sama, kreativitas, dan kekuatan sosial.</p></div></div>
+<h2>4. ⚖️ Potensi dan Tantangan Kemajemukan</h2>
+<table>
+<tr><th>Potensi</th><th>Tantangan</th><th>Sikap yang Dibutuhkan</th></tr>
+<tr><td>Saling belajar dari perbedaan</td><td>Salah paham antar kelompok</td><td>Dialog dan keterbukaan</td></tr>
+<tr><td>Kaya budaya dan kreativitas</td><td>Sikap merasa kelompok sendiri paling benar</td><td>Saling menghormati</td></tr>
+<tr><td>Kerja sama lintas kelompok</td><td>Perbedaan kepentingan</td><td>Mencari tujuan bersama</td></tr>
+<tr><td>Hubungan antardaerah semakin kuat</td><td>Ketimpangan pengaruh antarkelompok</td><td>Adil dan tidak diskriminatif</td></tr>
+</table>
+<div class="contextbox"><b>Kasus sederhana:</b> dua kelompok siswa berbeda pendapat tentang konsep pentas budaya. Keduanya ingin acara sukses. Solusi integratif bukan menghapus salah satu budaya, melainkan menyepakati tujuan bersama dan memberi ruang bagi keduanya.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="section-visual"><div class="visual-frame "><img src="assets/tantangan-keberagaman.png" alt="Tantangan keberagaman" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><div class="card"><h3>Tantangan</h3><p>Perhatikan bagaimana perbedaan pendapat dapat dikelola melalui komunikasi dan toleransi.</p></div></div>
+<div class="visual-frame "><img src="assets/integrasi-nasional.png" alt="Integrasi nasional" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h2>5. 🏛️ Terbentuknya Integrasi Nasional</h2>
+<p>Integrasi nasional tidak terbentuk secara tiba-tiba. Buku sumber menjelaskan proses sejarah yang panjang, mulai dari upaya penyatuan pada masa kerajaan, pengalaman penjajahan, tumbuhnya kesadaran nasional, Sumpah Pemuda, Proklamasi, hingga upaya merawat persatuan setelah kemerdekaan.</p>
+<div class="timeline">
+<div class="timecard"><b>Abad ke-7 • Sriwijaya</b><p>Menunjukkan upaya penyatuan wilayah melalui perdagangan, agama, dan kekuasaan politik.</p></div>
+<div class="timecard"><b>Abad ke-13 • Majapahit</b><p>Melanjutkan proses penyatuan berbagai wilayah dan kelompok melalui hubungan politik, ekonomi, dan sosial.</p></div>
+<div class="timecard"><b>Masa penjajahan</b><p>Pengalaman senasib sebagai masyarakat yang dijajah ikut menumbuhkan kesadaran untuk merdeka dan bersatu.</p></div>
+<div class="timecard"><b>Pergerakan nasional</b><p>Organisasi seperti Budi Utomo, Sarekat Islam, Jong Ambon, Indische Partij, Muhammadiyah, Nahdlatul Ulama, dan Partai Nasional Indonesia menjadi bagian dari dinamika perjuangan.</p></div>
+<div class="timecard"><b>28 Oktober 1928 • Sumpah Pemuda</b><p>Satu tanah air, satu bangsa, dan satu bahasa: Indonesia. Bahasa Indonesia menjadi simbol penting identitas pemersatu.</p></div>
+<div class="timecard"><b>17 Agustus 1945 • Proklamasi</b><p>Menjadi puncak perjuangan menuju kemerdekaan, tetapi integrasi nasional tetap perlu dirawat.</p></div>
+<div class="timecard"><b>Setelah kemerdekaan</b><p>Dialog, budaya, kerja sama, dan semangat persatuan terus diperlukan untuk menghadapi dinamika sosial dan politik.</p></div>
+</div>
+<div class="keybox"><b>Catatan penting:</b> menurut buku sumber, penyatuan pada masa kerajaan sering dilakukan melalui kekuasaan atau penaklukan sehingga belum selalu kokoh. Integrasi yang lebih kuat membutuhkan kesadaran, tujuan bersama, dan kerja sama.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<h2>6. 🇮🇩 Bhinneka Tunggal Ika sebagai Prinsip Kebhinekaan</h2>
+<div class="promptbox center">“Bhinneka Tunggal Ika”<br><small>Berbeda-beda tetapi tetap satu.</small></div>
+<div class="three" style="margin-top:15px">
+<div class="callout"><b>🤝 Toleransi</b><br>Menghormati perbedaan tanpa merendahkan kelompok lain.</div>
+<div class="callout"><b>🗣️ Dialog</b><br>Menyelesaikan perbedaan melalui komunikasi dan mencari titik temu.</div>
+<div class="callout"><b>🌱 Kerja Sama</b><br>Mengerjakan tujuan bersama meskipun identitas berbeda.</div>
+<div class="callout"><b>⚖️ Keadilan</b><br>Memberi kesempatan yang adil dan tidak mendominasi.</div>
+<div class="callout"><b>🇮🇩 Persatuan</b><br>Mendahulukan kepentingan bersama sebagai bangsa.</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="visual-frame "><img src="assets/perdagangan.png" alt="Perdagangan antardaerah" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h2>7. 🚢 Perdagangan Antardaerah dan Persatuan</h2>
+<p>Perdagangan bukan hanya kegiatan jual beli. Dalam buku sumber, perdagangan juga dipandang dapat mempererat hubungan antardaerah karena masyarakat dan wilayah saling membutuhkan serta bekerja sama.</p>
+<table>
+<tr><th>Daerah Asal</th><th>Produk Unggulan</th><th>Daerah Tujuan</th><th>Dampak</th></tr>
+<tr><td>Sumatra</td><td>Kapur Barus</td><td>Jawa dan Kalimantan</td><td>Mempererat hubungan antardaerah karena saling membutuhkan.</td></tr>
+<tr><td>Maluku</td><td>Pala, Cengkeh</td><td>Seluruh Indonesia</td><td>Meningkatkan kerja sama ekonomi dan rasa saling ketergantungan.</td></tr>
+</table>
+<div class="contextbox"><b>Hubungkan dengan kehidupan sekarang:</b> ketika suatu daerah menghasilkan barang yang dibutuhkan daerah lain, terbentuk hubungan saling membutuhkan. Hubungan ekonomi seperti ini dapat menjadi salah satu jembatan interaksi dan kerja sama antardaerah.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="visual-frame "><img src="assets/studi-kasus.png" alt="Studi kasus sekolah" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h2>8. 🏫 Studi Kasus: Kebhinekaan di Sekolah</h2>
+<p>Bayangkan kelasmu akan membuat “Festival Budaya Kelas IX”. Ada kelompok yang ingin menampilkan tari daerah, kelompok lain ingin musik tradisional, sementara kelompok lain ingin membuat stan makanan khas. Waktu dan anggaran terbatas.</p>
+<div class="contextbox"><b>Pikirkan:</b> Bagaimana cara mengambil keputusan agar tidak ada kelompok yang merasa budaya mereka tidak dihargai?</div>
+<ol>
+<li>Tentukan tujuan bersama: festival berjalan sukses dan semua siswa merasa dihargai.</li>
+<li>Dengarkan alasan dan kebutuhan tiap kelompok.</li>
+<li>Susun prioritas berdasarkan kesepakatan, bukan dominasi.</li>
+<li>Bagi tugas secara adil.</li>
+<li>Evaluasi hasil kegiatan bersama.</li>
+</ol>
+<div class="keybox"><b>Inilah inti integrasi:</b> bukan membuat semua orang menjadi sama, tetapi mengelola perbedaan agar dapat bekerja menuju tujuan bersama.</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<h2>🧠 Ringkasan Cepat</h2>
+<div class="three">
+<div class="callout"><b>Keberagaman</b><br>Perbedaan suku, budaya, agama, bahasa, tradisi, dan unsur kehidupan sosial.</div>
+<div class="callout"><b>Kemajemukan</b><br>Masyarakat terdiri atas berbagai kelompok dengan karakteristik berbeda.</div>
+<div class="callout"><b>Integrasi</b><br>Proses menjaga persatuan di tengah perbedaan melalui tujuan bersama.</div>
+<div class="callout"><b>Kebhinekaan</b><br>Berbeda-beda tetapi tetap satu.</div>
+<div class="callout"><b>Kunci</b><br>Toleransi + dialog + kerja sama + keadilan + persatuan.</div>
+</div>
+</div>
+
+<div class="nextbar">
+<div class="nextinfo">Baca seluruh materi, terutama bagian studi kasus. Setelah siap, tandai bahwa kamu selesai belajar.</div>
+<button id="finishMateri" class="btn teal nextbtn" onclick="finishMateri()">✓ Saya Sudah Selesai Belajar</button>
+<button id="nextMateri" class="btn primary nextbtn" disabled onclick="go('aktivitas')">Selanjutnya → Aktivitas</button>
+</div>
+</section>
+
+<section id="aktivitas" class="screen"><div class="stepbar"><span class="step active">Langkah 4 dari 8 • Aktivitas</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button><button class="btn light" onclick="location.reload()">↻ Ulangi Aktivitas</button></div>
+<div class="visual-frame "><img src="assets/aktivitas.png" alt="Aktivitas mencocokkan konsep" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h1 class="title">🎯 Aktivitas: Pasangkan Konsep</h1><p class="subtitle">Tarik kartu konsep ke pasangan yang tepat. Kamu juga bisa klik kartu lalu klik target.</p>
+<div class="dragarea"><div class="card"><h3>Kartu Konsep</h3><div id="dragItems"></div></div><div class="card"><h3>Target Pasangan</h3><div id="dropTargets"></div></div></div>
+<div id="activityResult" class="card center" style="margin-top:18px">Cocokkan semua kartu untuk melihat hasil.</div>
+<div class="nextbar"><div class="nextinfo">Semua pasangan harus benar agar langkah berikutnya terbuka.</div><button id="nextAktivitas" class="btn primary nextbtn" disabled onclick="go('kuis')">Selanjutnya → Kuis HOTS</button></div>
+</section>
+
+<section id="kuis" class="screen"><div class="stepbar"><span class="step active">Langkah 5 dari 8 • Kuis HOTS</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button><button class="btn light" onclick="resetQuiz('kuis')">↻ Ulangi Kuis</button><span class="btn gold" id="timer">⏱ 10:00</span></div>
+<div class="visual-frame "><img src="assets/kuis-c4.png" alt="Stimulus kuis HOTS" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h1 class="title">🧠 Kuis HOTS</h1><p class="subtitle">10 soal kontekstual bertahap <b>C3 (penerapan)</b> dan <b>C4 (analisis)</b>. Baca situasi, tentukan konsep yang relevan, lalu pilih solusi paling tepat.</p><div class="card" style="margin-bottom:15px"><b>🎯 Fokus berpikir:</b> C3 = menerapkan konsep pada situasi nyata • C4 = menganalisis hubungan, masalah, dan dampak.</div><div class="progresswrap"><div id="quizProgress" class="progress"></div></div><div id="kuisQuiz"></div><div class="card center"><button class="btn primary" onclick="submitQuiz('kuis')">Periksa Kuis</button><div id="kuisResult" style="margin-top:15px"></div></div>
+<div class="nextbar"><div class="nextinfo">Selesaikan 10 soal dan baca pembahasan untuk melanjutkan.</div><button id="nextKuis" class="btn primary nextbtn" disabled onclick="go('akhir')">Selanjutnya → Asesmen Akhir</button></div>
+</section>
+
+<section id="akhir" class="screen"><div class="stepbar"><span class="step active">Langkah 6 dari 8 • Asesmen Akhir</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button><button class="btn light" onclick="resetQuiz('akhir')">↻ Ulangi Asesmen</button></div>
+<div class="visual-frame "><img src="assets/asesmen.png" alt="Asesmen akhir" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div>
+<h1 class="title">🏆 Asesmen Akhir</h1><p class="subtitle">10 soal untuk mengukur pencapaianmu setelah belajar.</p><div id="akhirQuiz"></div><div class="card center"><button class="btn primary" onclick="submitQuiz('akhir')">Selesaikan Asesmen</button><div id="akhirResult" style="margin-top:15px"></div></div>
+<div class="nextbar"><div class="nextinfo">Asesmen akhir harus selesai sebelum refleksi.</div><button id="nextAkhir" class="btn primary nextbtn" disabled onclick="go('refleksi')">Selanjutnya → Refleksi</button></div>
+</section>
+
+<section id="refleksi" class="screen"><div class="stepbar"><span class="step active">Langkah 7 dari 8 • Refleksi</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar"><button class="btn light" onclick="go('home')">← Home</button></div><div class="visual-frame "><img src="assets/refleksi.png" alt="Refleksi belajar" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div><h1 class="title">💭 Refleksi Belajar</h1><p class="subtitle">Tidak ada jawaban benar atau salah. Jujurlah pada proses belajarmu.</p>
+<div class="card"><label>Saya sudah memahami...</label><textarea id="r1"></textarea><label>Hal yang paling menarik adalah...</label><textarea id="r2"></textarea><label>Hal yang masih membingungkan adalah...</label><textarea id="r3"></textarea><label>Rencana saya setelah belajar materi ini adalah...</label><textarea id="r4"></textarea><label>Emoticon belajar hari ini</label><div id="emojis" style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0"><button class="btn light" onclick="pickEmoji('😍')">😍</button><button class="btn light" onclick="pickEmoji('😊')">😊</button><button class="btn light" onclick="pickEmoji('🙂')">🙂</button><button class="btn light" onclick="pickEmoji('😐')">😐</button><button class="btn light" onclick="pickEmoji('🤔')">🤔</button></div><div id="picked" style="font-size:28px"></div><button class="btn teal" onclick="saveReflection()">💾 Simpan Refleksi</button></div>
+<div class="nextbar"><div class="nextinfo">Simpan semua jawaban refleksi untuk membuka sertifikat.</div><button id="nextRefleksi" class="btn primary nextbtn" disabled onclick="go('sertifikat')">Selanjutnya → Sertifikat 🎓</button></div>
+</section>
+
+<section id="sertifikat" class="screen"><div class="stepbar"><span class="step active">Langkah 8 dari 8 • Sertifikat</span><span class="step">Kerjakan sampai selesai untuk membuka langkah berikutnya.</span></div>
+<div class="toolbar no-print"><button class="btn light" onclick="go('home')">← Home</button><button class="btn primary" onclick="printCert()">📥 Unduh Sertifikat PDF</button><button class="btn teal" onclick="printCert()">🖨 Cetak Sertifikat</button><button class="btn light" onclick="downloadResults()">⬇ Download Hasil Belajar</button></div>
+<div class="visual-frame no-print"><div class="visual-frame "><img src="assets/sertifikat.png" alt="Ilustrasi pencapaian belajar" loading="lazy" onerror="this.style.display='none'"><div class="visual-caption">Visual pembelajaran</div></div></div>
+<div id="certificate" class="certificate"><div class="certseal">🎓</div><div class="certtitle">SERTIFIKAT HASIL BELAJAR</div><p>Diberikan kepada</p><div class="certname" id="certName">Peserta Didik</div><p id="certClass">Kelas -</p><hr><p>telah menyelesaikan pembelajaran interaktif</p><h2 style="color:var(--purple)">Masyarakat Majemuk untuk Mewujudkan Integrasi Bangsa dengan Prinsip Kebhinekaan</h2><p><b>Nilai Akhir</b></p><div class="score" id="certScore">-</div><p id="certDate"></p><div>🇮🇩 • Bhinneka Tunggal Ika • 🤝</div></div>
+</section>
+
+</main>
+<footer>MPI IPS Kelas IX • MISI BHINNEKA • Belajar dari keberagaman, tumbuh dalam persatuan.</footer>
+<div id="toast" class="toast"></div>
+</div>
+
+<script>
+const state={name:'',kelas:'',scores:{awal:null,kuis:null,akhir:null},done:{apersepsi:false,awal:false,materi:false,aktivitas:false,kuis:false,akhir:false,refleksi:false,sertifikat:false},emoji:''};
+const awal=[
+["Indonesia disebut masyarakat majemuk karena…",["memiliki satu budaya yang sama","terdiri dari kelompok dengan latar belakang beragam","semua daerah memakai dialek yang sama","hanya memiliki satu agama"],1,"Masyarakat majemuk terdiri atas berbagai kelompok dengan latar belakang suku, budaya, agama, dan ras yang berbeda."],
+["Sikap paling tepat terhadap perbedaan budaya di sekolah adalah…",["menghindari semua teman berbeda","memaksakan budaya sendiri","saling menghargai dan belajar","membuat kelompok berdasarkan suku"],2,"Perbedaan dapat menjadi peluang untuk saling belajar dan memperkuat persatuan."],
+["Bhinneka Tunggal Ika menekankan bahwa…",["perbedaan harus dihilangkan","berbeda-beda tetapi tetap satu","setiap kelompok harus berdiri sendiri","satu budaya harus mendominasi"],1,"Makna Bhinneka Tunggal Ika adalah berbeda-beda tetapi tetap satu."],
+["Perbedaan kepentingan antarkelompok dapat…",["selalu menghasilkan persatuan","tidak pernah menimbulkan masalah","menimbulkan konflik tetapi juga dapat mendorong integrasi","menghapus keberagaman"],2,"Perbedaan dapat memicu konflik, tetapi persamaan tujuan dan kerja sama dapat menciptakan integrasi."],
+["Perdagangan antardaerah dapat memperkuat persatuan karena…",["membuat wilayah tidak saling membutuhkan","mendorong saling ketergantungan dan kerja sama","menghilangkan produk lokal","membatasi hubungan antardaerah"],1,"Perdagangan membuat wilayah saling membutuhkan dan mendorong kerja sama ekonomi."]
+];
+const hots=[
+["<span class='leveltag'>C3 • Penerapan</span><br>Di kelas IX, anggota kelompokmu berasal dari latar budaya yang berbeda. Saat membuat poster festival budaya, satu anggota meminta semua isi poster hanya menampilkan budayanya. Tindakan yang paling tepat adalah…",
+["mengikuti permintaannya agar tidak terjadi perdebatan","menghapus semua unsur budaya agar netral","menggabungkan beberapa contoh budaya dan menyepakati tema bersama","meminta guru memilih budaya yang paling baik"],2,
+"Prinsip kebhinekaan diterapkan dengan memberi ruang pada perbedaan dan mencari tujuan bersama."],
+
+["<span class='leveltag'>C3 • Penerapan</span><br>Saat kerja kelompok, seorang teman menggunakan dialek daerahnya dan beberapa siswa menertawakannya. Sikap yang paling sesuai dengan prinsip kebhinekaan adalah…",
+["meminta teman tersebut tidak menggunakan dialeknya lagi","menertawakan bersama agar suasana lebih santai","menghargai perbedaan bahasa/dialek dan tetap bekerja sama","memisahkan kelompok berdasarkan daerah asal"],2,
+"Perbedaan bahasa atau dialek merupakan bagian dari keberagaman yang perlu dihargai."],
+
+["<span class='leveltag'>C3 • Penerapan</span><br>Sekolah akan mengadakan kegiatan bersama yang diikuti siswa dengan latar agama berbeda. Agar kegiatan mencerminkan toleransi, panitia sebaiknya…",
+["memberi kesempatan satu kelompok menentukan seluruh kegiatan","menyusun kegiatan dengan mempertimbangkan kebutuhan semua peserta","menghindari semua bentuk perbedaan","memisahkan peserta berdasarkan identitas"],1,
+"Toleransi berarti menghormati perbedaan dan memberi ruang yang adil bagi kelompok yang berbeda."],
+
+["<span class='leveltag'>C3 • Penerapan</span><br>Kelompokmu mendapat tugas mencari contoh perdagangan yang menghubungkan berbagai wilayah Indonesia. Data yang paling sesuai dengan materi adalah…",
+["Kapur Barus dari Sumatra yang diperdagangkan ke Jawa dan Kalimantan","barang yang hanya digunakan di daerah asal","produk yang sengaja tidak diperdagangkan ke daerah lain","kegiatan ekonomi yang membuat daerah tidak saling membutuhkan"],0,
+"Buku sumber memberi contoh Kapur Barus dari Sumatra yang diperdagangkan ke Jawa dan Kalimantan sehingga mempererat hubungan antardaerah."],
+
+["<span class='leveltag'>C3 • Penerapan</span><br>Dua kelompok siswa berbeda pendapat tentang pembagian tugas pentas budaya. Keduanya sama-sama ingin acara berhasil. Langkah yang paling tepat adalah…",
+["membiarkan kelompok yang lebih banyak anggotanya menang","membatalkan kegiatan","menyusun pembagian tugas berdasarkan kesepakatan dan tujuan bersama","meminta salah satu kelompok keluar"],2,
+"Tujuan bersama dapat menjadi dasar kerja sama meskipun terdapat perbedaan kepentingan."],
+
+["<span class='leveltag'>C4 • Analisis</span><br>Perhatikan situasi berikut: Kelompok A merasa budaya mereka paling layak ditampilkan. Kelompok B merasa pendapat mereka selalu diabaikan. Jika kondisi ini dibiarkan, dampak yang paling mungkin terhadap integrasi kelompok adalah…",
+["kerja sama semakin kuat tanpa perlu dialog","muncul ketegangan karena tidak ada kesepakatan dan rasa dihargai","semua perbedaan otomatis hilang","hubungan antarkelompok menjadi lebih harmonis"],1,
+"Dominasi satu kelompok dan tidak adanya kesepakatan dapat meningkatkan ketegangan. Integrasi memerlukan dialog dan tujuan bersama."],
+
+["<span class='leveltag'>C4 • Analisis</span><br>Perhatikan dua cara penyatuan berikut. Cara pertama menuntut kelompok lain mengikuti kehendak kelompok yang lebih kuat. Cara kedua mengajak kelompok berbeda berdialog dan menyepakati tujuan bersama. Berdasarkan materi, cara kedua lebih mendukung integrasi karena…",
+["menghilangkan semua identitas kelompok","mengandalkan kekuatan kelompok dominan","membangun persatuan melalui kesadaran, dialog, dan kerja sama","membuat semua kelompok memiliki budaya yang sama"],2,
+"Materi menekankan bahwa integrasi yang dirawat melalui dialog, budaya, dan semangat persatuan lebih sesuai dengan kehidupan masyarakat yang beragam."],
+
+["<span class='leveltag'>C4 • Analisis</span><br>Sebuah daerah memasok produk unggulan ke daerah lain. Daerah tujuan kemudian memasok barang berbeda yang dibutuhkan daerah asal. Hubungan tersebut paling tepat dianalisis sebagai…",
+["hubungan yang membuat kedua daerah tidak bergantung satu sama lain","hubungan saling membutuhkan yang dapat memperkuat kerja sama antardaerah","hubungan yang menghapus keberagaman ekonomi","hubungan yang pasti menimbulkan konflik"],1,
+"Perdagangan dapat menciptakan saling ketergantungan dan kerja sama ekonomi yang mempererat hubungan antardaerah."],
+
+["<span class='leveltag'>C4 • Analisis</span><br>Di sebuah sekolah, keputusan kegiatan kelas selalu ditentukan oleh kelompok siswa yang paling banyak. Kelompok kecil jarang diberi kesempatan menyampaikan pendapat. Ciri masyarakat majemuk yang paling relevan untuk menganalisis masalah tersebut adalah…",
+["adanya kelompok dengan kebudayaan berbeda dan potensi dominasi kelompok tertentu","tidak adanya lembaga sosial","semua kelompok memiliki nilai yang sama","perdagangan antardaerah"],0,
+"Materi menyebut keberadaan kelompok dengan kebudayaan berbeda serta kemungkinan dominasi kelompok tertentu dalam bidang politik. Dalam konteks sekolah, prinsip yang relevan adalah mencegah dominasi dan membangun kesepakatan."],
+
+["<span class='leveltag'>C4 • Analisis</span><br>Seorang siswa menyimpulkan, “Agar integrasi tercapai, semua budaya daerah harus dibuat sama.” Berdasarkan materi, penilaian yang paling tepat terhadap kesimpulan tersebut adalah…",
+["benar, karena persatuan berarti keseragaman","benar, karena perbedaan selalu menimbulkan konflik","kurang tepat, karena integrasi berarti mengelola perbedaan untuk mencapai persatuan, bukan menghapus keberagaman","benar, karena hanya satu budaya yang boleh berkembang"],2,
+"Bhinneka Tunggal Ika menekankan persatuan dalam keberagaman. Integrasi tidak identik dengan menghilangkan perbedaan."]
+];
+const akhir=[
+["Masyarakat majemuk paling tepat dipahami sebagai masyarakat yang…",["seragam","terdiri dari kelompok berlatar belakang beragam","tidak memiliki aturan","tidak memiliki lembaga sosial"],1],
+["Contoh segmentasi dalam masyarakat majemuk adalah…",["pembagian ke kelompok sosial dengan subkebudayaan berbeda","semua orang memakai budaya sama","hilangnya kelompok sosial","satu lembaga mengatur semuanya"],0],
+["Mengapa integrasi pada masa kerajaan tidak selalu kokoh menurut materi?",["selalu berdasarkan dialog","sering melalui kekerasan/penaklukan sehingga muncul perlawanan","tidak ada wilayah","tidak ada perdagangan"],1],
+["Kesadaran nasional berkembang antara lain karena…",["rasa senasib dan akses pendidikan","hilangnya semua organisasi","larangan berorganisasi","perbedaan makin tajam"],0],
+["Sumpah Pemuda memperkuat integrasi dengan menegaskan…",["satu budaya","satu tanah air, satu bangsa, satu bahasa","satu agama","satu kerajaan"],1],
+["Setelah Proklamasi, integrasi nasional…",["langsung selesai","masih terus dirawat menghadapi berbagai dinamika","tidak diperlukan","hanya urusan pemerintah"],1],
+["Perdagangan antardaerah berkontribusi pada persatuan melalui…",["saling ketergantungan dan kerja sama","persaingan tanpa aturan","isolasi wilayah","penghapusan produk lokal"],0],
+["Prinsip kebhinekaan dalam kehidupan sekolah paling tepat diwujudkan melalui…",["toleransi, saling menghormati, dan kerja sama","dominasi satu kelompok","pemisahan berdasarkan identitas","menolak perbedaan"],0],
+["Jika perbedaan kepentingan muncul, integrasi dapat dibangun ketika kelompok…",["memiliki tujuan bersama dan bersedia bekerja sama","saling menghindari","memaksakan kehendak","menghapus identitas"],0],
+["Tujuan utama merawat kebhinekaan adalah…",["mewujudkan masyarakat harmonis dan memperkuat persatuan","menghilangkan semua perbedaan","membatasi interaksi","membuat satu kelompok dominan"],0]
+];
+
+function save(){localStorage.setItem('mpiIPS9',JSON.stringify(state))}
+function load(){try{Object.assign(state,JSON.parse(localStorage.getItem('mpiIPS9')||'{}'))}catch(e){}}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),2200)}
+function manualClass(){document.getElementById('kelasManual').classList.toggle('hidden',document.getElementById('kelas').value!=='manual')}
+function startApp(){const n=document.getElementById('nama').value.trim();let k=document.getElementById('kelas').value;if(k==='manual')k=document.getElementById('kelasManual').value.trim();if(!n||!k)return toast('Lengkapi nama dan kelas terlebih dahulu.');state.name=n;state.kelas=k;save();updateUser();go('home')}
+function updateUser(){document.getElementById('userPill').textContent=state.name?`${state.name} • ${state.kelas}`:'Belum dimulai';document.getElementById('homeName').textContent=state.name||'Peserta Didik';document.getElementById('homeClass').textContent=state.kelas||'-';updateProgress();updateCert()}
+function canOpen(id){
+ const req={awal:'apersepsi',materi:'awal',aktivitas:'materi',kuis:'aktivitas',akhir:'kuis',refleksi:'akhir',sertifikat:'refleksi'};
+ const r=req[id]; if(r && !state.done[r]){toast('Selesaikan langkah sebelumnya terlebih dahulu.');return false}
+ return true;
+}
+function go(id){
+ if(!state.name&&id!=='start'){toast('Silakan isi nama dan kelas dulu.');return}
+ if(!canOpen(id))return;
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');window.scrollTo(0,0);
+ if(id==='kuis')startTimer();if(id==='awal')renderQuiz('awal',awal);if(id==='kuis')renderQuiz('kuis',hots);if(id==='akhir')renderQuiz('akhir',akhir);if(id==='aktivitas')setupActivity();
+ if(id==='sertifikat'){state.done.sertifikat=true;save();updateProgress();updateCert()}
+}
+function updateProgress(){
+ const doneKeys=['apersepsi','awal','materi','aktivitas','kuis','akhir','refleksi'];const done=doneKeys.filter(k=>state.done[k]).length;const total=doneKeys.length;const p=Math.round(done/total*100);
+ const gp=document.getElementById('globalProgress');if(gp)gp.style.width=p+'%';const pt=document.getElementById('progressText');if(pt)pt.textContent=`Progress belajar: ${p}%`;
+ const xp=done*100+(state.scores.kuis||0)*2+(state.scores.akhir||0)*2;const level=Math.min(5,1+Math.floor(xp/300));const titles=['Penjelajah Kebhinekaan','Pengamat Keberagaman','Penakluk Misi','Analis Integrasi','Duta Bhinneka'];
+ const xf=document.getElementById('xpFill');if(xf)xf.style.width=Math.min(100,(xp%300)/3)+'%';const xt=document.getElementById('xpText');if(xt)xt.textContent=`${xp} XP • ${p}% perjalanan`;const lt=document.getElementById('levelTitle');if(lt)lt.textContent=`Level ${level} • ${titles[level-1]}`;
+ const sd=document.getElementById('statDone');if(sd)sd.textContent=`${done}/${total}`;const ss=document.getElementById('statScore');if(ss)ss.textContent=state.scores.akhir==null?'-':state.scores.akhir;
+ const badges=[['💡','Pemantik Berani','Selesaikan Apersepsi','apersepsi'],['🧩','Penjelajah','Selesaikan Asesmen Awal','awal'],['📖','Pembaca Tuntas','Selesaikan Materi','materi'],['🎯','Penakluk Aktivitas','Selesaikan Aktivitas','aktivitas'],['🧠','Analis HOTS','Selesaikan Kuis','kuis'],['🏆','Juara Kebhinekaan','Nilai akhir ≥ 90','juara'],['💭','Refleksi Diri','Selesaikan Refleksi','refleksi'],['🎓','Duta Bhinneka','Selesaikan seluruh misi','all']];
+ const unlocked=b=>b==='juara'?state.scores.akhir>=90:b==='all'?done===total:!!state.done[b];const bc=document.getElementById('badges');if(bc){bc.innerHTML=badges.map(b=>`<div class="badge-item ${unlocked(b[3])?'unlocked':''}"><span class="badge-icon">${b[0]}</span><b>${b[1]}</b><small>${unlocked(b[3])?'✓ Terbuka':b[2]}</small></div>`).join('')}const sb=document.getElementById('statBadge');if(sb)sb.textContent=badges.filter(b=>unlocked(b[3])).length;
+ const fm=document.getElementById('finishMateri');if(fm)fm.textContent=state.done.materi?'✓ Materi Sudah Selesai':'✓ Saya Sudah Selesai Belajar';
+}
+
+function finishApersepsi(){
+ const ans=document.getElementById('apersepsiAnswer').value.trim();
+ if(!ans){toast('Tulis pendapatmu terlebih dahulu.');return}
+ localStorage.setItem('apersepsiAnswer',ans);state.done.apersepsi=true;save();updateProgress();toast('Langkah 1 selesai! Asesmen Awal terbuka.');
+}
+function finishMateri(){state.done.materi=true;save();updateProgress();toast('Materi selesai! Aktivitas terbuka.')}
+function renderQuiz(type,data){const el=document.getElementById(type+'Quiz');if(!el)return;el.innerHTML=data.map((q,i)=>`<div class="card qbox"><div class="qhead"><span class="num">${i+1}</span><div class="qtext">${q[0]}</div></div>${q[1].map((o,j)=>`<button class="option" data-q="${i}" data-a="${j}" onclick="choose('${type}',${i},${j})">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}<div id="${type}fb${i}" class="feedback"></div></div>`).join('')}
+function choose(type,i,j){document.querySelectorAll(`#${type}Quiz .option[data-q="${i}"]`).forEach(b=>b.classList.remove('selected'));document.querySelector(`#${type}Quiz .option[data-q="${i}"][data-a="${j}"]`).classList.add('selected');if(type==='kuis'){const answered=document.querySelectorAll('#kuisQuiz .option.selected').length;const pct=Math.round(answered/hots.length*100);document.getElementById('quizProgress').style.width=pct+'%';}}
+function submitQuiz(type){const data=type==='awal'?awal:type==='kuis'?hots:akhir;let score=0,answered=0;data.forEach((q,i)=>{const btn=document.querySelector(`#${type}Quiz .option[data-q="${i}"].selected`);const fb=document.getElementById(`${type}fb${i}`);if(!btn){fb.className='feedback show no';fb.textContent='Belum dijawab.';return}answered++;const a=+btn.dataset.a;if(a===q[2]){score++;btn.classList.add('correct');fb.className='feedback show ok';fb.innerHTML='✅ Benar! '+(q[3]||'')}else{btn.classList.add('wrong');fb.className='feedback show no';fb.innerHTML='❌ Belum tepat. '+(q[3]||'')} });if(answered<data.length)return toast(`Masih ada ${data.length-answered} soal yang belum dijawab.`);const nilai=Math.round(score/data.length*100);state.scores[type]=nilai;state.done[type]=true;save();updateProgress();
+ if(type==='awal')document.getElementById('nextAwal').disabled=false;
+ if(type==='kuis')document.getElementById('nextKuis').disabled=false;
+ if(type==='akhir')document.getElementById('nextAkhir').disabled=false;
+ document.getElementById(type+'Result').innerHTML=`<div class="score">${nilai}</div><b>${score}/${data.length} benar</b><p>${type==='akhir'?predicate(nilai):'Gunakan hasil ini untuk menentukan bagian yang perlu kamu pelajari lagi.'}</p>`;if(type==='akhir'&&nilai>=90)confetti();updateCert()}
+function predicate(n){return n>=90?'Sangat Baik 🌟':n>=80?'Baik 👍':n>=70?'Cukup 🙂':'Perlu Bimbingan 💪'}
+function resetQuiz(type){if(type==='awal'){state.done.awal=false;renderQuiz('awal',awal)}if(type==='kuis'){state.done.kuis=false;renderQuiz('kuis',hots)}if(type==='akhir'){state.done.akhir=false;renderQuiz('akhir',akhir)}save();updateProgress();document.getElementById(type+'Result').innerHTML=''}
+let timerSec=600,timerInt=null;function startTimer(){clearInterval(timerInt);timerSec=600;document.getElementById('timer').textContent='⏱ 10:00';timerInt=setInterval(()=>{timerSec--;const m=Math.floor(timerSec/60),s=timerSec%60;document.getElementById('timer').textContent=`⏱ ${m}:${String(s).padStart(2,'0')}`;if(timerSec<=0){clearInterval(timerInt);toast('Waktu habis. Silakan periksa kuis.')}},1000)}
+const pairs=[['Toleransi','Menghormati perbedaan'],['Sumpah Pemuda','Satu tanah air, bangsa, dan bahasa Indonesia'],['Perdagangan','Saling membutuhkan antardaerah'],['Masyarakat majemuk','Beragam suku, budaya, agama, dan ras'],['Integrasi','Persatuan dalam keberagaman']];
+function setupActivity(){const a=document.getElementById('dragItems'),b=document.getElementById('dropTargets');a.innerHTML='';b.innerHTML='';const targets=[...pairs].sort(()=>Math.random()-.5);pairs.forEach((p,i)=>{const d=document.createElement('div');d.className='draggable';d.draggable=true;d.dataset.key=p[0];d.textContent='🔹 '+p[0];d.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',p[0]));a.appendChild(d)});targets.forEach(p=>{const z=document.createElement('div');z.className='dropzone';z.dataset.answer=p[0];z.textContent='🎯 '+p[1];z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('over')});z.addEventListener('dragleave',()=>z.classList.remove('over'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('over');const key=e.dataTransfer.getData('text/plain');if(key===z.dataset.answer){z.innerHTML='✅ '+p[1];z.style.borderStyle='solid';document.querySelector(`[data-key="${key}"]`)?.remove();checkActivity()}else{toast('Belum cocok. Coba pikirkan lagi 😊')}});b.appendChild(z)})}
+function checkActivity(){const left=document.querySelectorAll('#dragItems .draggable').length;if(left===0){state.done.aktivitas=true;save();updateProgress();document.getElementById('nextAktivitas').disabled=false;document.getElementById('activityResult').innerHTML='<div class="score">100</div><b>🎉 Semua pasangan benar!</b><p>Growth mindset: kamu berhasil memperbaiki strategi sampai menemukan semua pasangan.</p>';confetti()}}
+function pickEmoji(e){state.emoji=e;document.getElementById('picked').textContent=e}
+function saveReflection(){['r1','r2','r3','r4'].forEach(id=>localStorage.setItem(id,document.getElementById(id).value));state.done.refleksi=true;save();updateProgress();document.getElementById('nextRefleksi').disabled=false;toast('Refleksi tersimpan! Langkah sertifikat terbuka.')}
+function updateCert(){document.getElementById('certName').textContent=state.name||'Peserta Didik';document.getElementById('certClass').textContent='Kelas '+(state.kelas||'-');document.getElementById('certScore').textContent=state.scores.akhir??'-';document.getElementById('certDate').textContent=new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}
+function printCert(){if(state.scores.akhir===null)return toast('Selesaikan Asesmen Akhir terlebih dahulu.');updateCert();window.print()}
+function downloadResults(){const text=`HASIL BELAJAR MPI IPS IX\nMISI BHINNEKA\nNama: ${state.name}\nKelas: ${state.kelas}\nAsesmen Awal: ${state.scores.awal??'-'}\nKuis HOTS: ${state.scores.kuis??'-'}\nAsesmen Akhir: ${state.scores.akhir??'-'} (${predicate(state.scores.akhir||0)})\nTanggal: ${new Date().toLocaleString('id-ID')}\nRefleksi: ${state.emoji||'-'}`;const blob=new Blob([text],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Hasil_Belajar_${state.name||'Siswa'}.txt`;a.click();URL.revokeObjectURL(a.href)}
+function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('dark',document.body.classList.contains('dark'))}
+let audioCtx=null,osc=null;function toggleMusic(){const btn=document.getElementById('musicBtn');if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();osc=audioCtx.createOscillator();const g=audioCtx.createGain();osc.frequency.value=261.63;g.gain.value=.025;osc.connect(g);g.connect(audioCtx.destination);osc.start();btn.textContent='🔊'}else if(audioCtx.state==='running'){audioCtx.suspend();btn.textContent='🔇'}else{audioCtx.resume();btn.textContent='🔊'}}
+function confetti(){for(let i=0;i<90;i++){const s=document.createElement('span');s.textContent=['🎉','✨','💜','🩵'][Math.floor(Math.random()*4)];s.style.position='fixed';s.style.left=Math.random()*100+'vw';s.style.top='-20px';s.style.fontSize=(12+Math.random()*18)+'px';s.style.zIndex=9999;s.style.transition='transform 2.5s linear,opacity 2.5s';document.body.appendChild(s);requestAnimationFrame(()=>{s.style.transform=`translate(${(Math.random()-.5)*300}px,${window.innerHeight+80}px) rotate(${Math.random()*720}deg)`;s.style.opacity=0});setTimeout(()=>s.remove(),2600)}}
+load();if(localStorage.getItem('dark')==='true')document.body.classList.add('dark');updateUser();updateProgress();
+document.getElementById('apersepsiAnswer').value=localStorage.getItem('apersepsiAnswer')||'';document.getElementById('apersepsiAnswer').addEventListener('input',e=>localStorage.setItem('apersepsiAnswer',e.target.value));
+['r1','r2','r3','r4'].forEach(id=>document.getElementById(id).value=localStorage.getItem(id)||'');
+</script>
+</body>
+</html>
